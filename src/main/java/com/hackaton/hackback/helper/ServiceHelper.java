@@ -36,6 +36,25 @@ public class ServiceHelper {
                 .build();
     }
 
+    public WorkshopFormDAO convertToWorkshopFormDAO(WorkshopFormModel workshopFormModel){
+        return WorkshopFormDAO.builder()
+                .id(workshopFormModel.getId())
+                .firstName(workshopFormModel.getFirstName())
+                .lastName(workshopFormModel.getLastName())
+                .city(workshopFormModel.getCity())
+                .email(workshopFormModel.getEmail())
+                .phoneNumber(workshopFormModel.getPhoneNumber())
+                .build();
+    }
+    public WorkshopFormModel convertToWorkshopFormEntity(WorkshopFormDAO workshopFormDAO){
+        return WorkshopFormModel.builder()
+                .firstName(workshopFormDAO.getFirstName())
+                .lastName(workshopFormDAO.getLastName())
+                .email(workshopFormDAO.getEmail())
+                .phoneNumber(workshopFormDAO.getPhoneNumber())
+                .city(workshopFormDAO.getCity())
+                .build();
+    }
 
     public WorkshopDAO convertStringToWorkshopDAO(String workshop) {
         WorkshopDAO result;
