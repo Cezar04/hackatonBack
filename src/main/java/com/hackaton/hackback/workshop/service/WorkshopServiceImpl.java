@@ -1,15 +1,19 @@
 package com.hackaton.hackback.workshop.service;
 
+import com.hackaton.hackback.errors.ErrorMessage;
 import com.hackaton.hackback.helper.ServiceHelper;
 import com.hackaton.hackback.workshop.WorkshopDAO;
 import com.hackaton.hackback.workshop.WorkshopModel;
 import com.hackaton.hackback.workshop.WorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,10 +40,14 @@ public class WorkshopServiceImpl implements WorkshopService{
     }
 
     @Override
-    public ResponseEntity<?> addWorkshop(WorkshopDAO workshopDAO) {
-
-        WorkshopModel workshop = serviceHelper.convertToWorkshopEntity(workshopDAO);
-        workshopRepository.save(workshop);
+    public ResponseEntity<?> addWorkshop(MultipartFile file, String workshop) throws IOException {
+        WorkshopDAO workshopDAO = serviceHelper.convertStringToWorkshopDAO(workshop);
+        workshopDAO.setImage(file.getBytes());
+        if(workshopDAO == null) {
+            return new ResponseEntity<>(ErrorMessage.BAD_STRUCTURE_FOR_JSON, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        }
+        WorkshopModel workshopModel = serviceHelper.convertToWorkshopEntity(workshopDAO);
+        workshopRepository.save(workshopModel);
 
         return new ResponseEntity<>(workshop, HttpStatus.OK);
     }
