@@ -25,7 +25,7 @@ public class WorkshopModel {
     private String Title;
     private String subTitle;
     private String description;
-
+    private byte[] image;
     private String startDate;
     private String endDate;
 

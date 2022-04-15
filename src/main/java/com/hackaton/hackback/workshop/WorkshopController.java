@@ -1,15 +1,20 @@
 package com.hackaton.hackback.workshop;
 
 import com.hackaton.hackback.workshop.service.WorkshopService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/workshop")
+@Slf4j
 public class WorkshopController {
     private WorkshopService workshopService;
 
@@ -23,8 +28,11 @@ public class WorkshopController {
         return workshopService.findAll();
     }
 
-    @PostMapping("/add-workshop")
-    private ResponseEntity<?> addWorkshop(@RequestBody WorkshopDAO workshopDAO){
-        return workshopService.addWorkshop(workshopDAO);
+    @PostMapping(value = "/add-workshop",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    private ResponseEntity<?> addWorkshop(@RequestPart("image") MultipartFile file,
+                                          @RequestPart("workshop") String workshop) throws IOException {
+
+        return workshopService.addWorkshop(file, workshop);
     }
 }
