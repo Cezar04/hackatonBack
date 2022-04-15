@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -23,8 +24,20 @@ public class WorkshopController {
         return workshopService.findAll();
     }
 
+    @GetMapping("/{workshopId}")
+    public ResponseEntity<?> getWorkshop(@PathVariable UUID workshopId){
+        return workshopService.findWorkshopById(workshopId);
+    }
+
+    @DeleteMapping("/delete/{workshopId}")
+    public ResponseEntity<?> deleteWorkshop(@PathVariable UUID workshopId){
+        return workshopService.deleteWorkshop(workshopId);
+    }
+
     @PostMapping("/add-workshop")
     private ResponseEntity<?> addWorkshop(@RequestBody WorkshopDAO workshopDAO){
         return workshopService.addWorkshop(workshopDAO);
     }
+
+
 }
