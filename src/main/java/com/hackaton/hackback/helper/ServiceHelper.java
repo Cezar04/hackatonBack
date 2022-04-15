@@ -3,7 +3,11 @@ package com.hackaton.hackback.helper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hackaton.hackback.workshop.WorkshopDAO;
 import com.hackaton.hackback.workshop.WorkshopModel;
+
+import com.hackaton.hackback.workshopForm.WorkshopFormDAO;
+import com.hackaton.hackback.workshopForm.WorkshopFormModel;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,6 +36,7 @@ public class ServiceHelper {
                 .build();
     }
 
+
     public WorkshopDAO convertStringToWorkshopDAO(String workshop) {
         WorkshopDAO result;
         try{
@@ -46,3 +51,5 @@ public class ServiceHelper {
     }
 
 }
+
+
