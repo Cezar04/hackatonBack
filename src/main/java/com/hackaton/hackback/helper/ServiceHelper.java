@@ -1,6 +1,8 @@
 package com.hackaton.hackback.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hackaton.hackback.contributor.ContributorDAO;
+import com.hackaton.hackback.contributor.ContributorModel;
 import com.hackaton.hackback.workshop.WorkshopDAO;
 import com.hackaton.hackback.workshop.WorkshopModel;
 
@@ -67,6 +69,29 @@ public class ServiceHelper {
             log.error(exception.getMessage(), exception);
         }
         return null;
+    }
+
+    public ContributorModel convertToContributorEntity(ContributorDAO contributorDAO){
+        return ContributorModel.builder()
+                .name(contributorDAO.getName())
+                .city(contributorDAO.getCity())
+                .website(contributorDAO.getWebsite())
+                .description(contributorDAO.getDescription())
+                .email(contributorDAO.getEmail())
+                .phoneNumber(contributorDAO.getPhoneNumber())
+                .build();
+    }
+
+    public ContributorDAO convertToContributorDAO(ContributorModel contributorModel){
+        return ContributorDAO.builder()
+                .id(contributorModel.getId())
+                .city(contributorModel.getCity())
+                .description(contributorModel.getDescription())
+                .email(contributorModel.getEmail())
+                .name(contributorModel.getName())
+                .phoneNumber(contributorModel.getPhoneNumber())
+                .website(contributorModel.getWebsite())
+                .build();
     }
 
 }
